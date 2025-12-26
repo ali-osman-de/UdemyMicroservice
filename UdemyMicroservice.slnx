@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/services/" />
+  <Folder Name="/src/services/catalog/">
+    <Project Path="UdemyMicroservice.Catalog.Api/UdemyMicroservice.Catalog.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/Shared/">
+    <Project Path="../UdemyMicroservice.Shared/UdemyMicroservice.Shared.csproj" Id="7a2c80d7-710f-4fd7-8a3d-f51da6282fc0" />
+  </Folder>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+</Solution>
