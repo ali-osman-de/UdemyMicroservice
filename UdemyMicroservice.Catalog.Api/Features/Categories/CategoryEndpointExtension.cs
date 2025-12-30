@@ -1,4 +1,6 @@
-﻿namespace UdemyMicroservice.Catalog.Api.Features.Categories;
+﻿using UdemyMicroservice.Shared.Filters;
+
+namespace UdemyMicroservice.Catalog.Api.Features.Categories;
 
 public static class CategoryEndpointExtension
 {

@@ -11,7 +11,7 @@ public class CourseEntityConfig : IEntityTypeConfiguration<Course>
     public void Configure(EntityTypeBuilder<Course> builder)
     {
         builder.ToCollection("courses");
-        builder.HasKey();
+        builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedNever();
         builder.Property(x => x.Name).HasElementName("name").HasMaxLength(100);
         builder.Property(x => x.Description).HasElementName("description").HasMaxLength(1000);

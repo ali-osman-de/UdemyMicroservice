@@ -10,7 +10,7 @@ public class CategoryEntityConfig : IEntityTypeConfiguration<Category>
     public void Configure(EntityTypeBuilder<Category> builder)
     {
         builder.ToCollection("categories");
-        builder.HasKey();
+        builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedNever();
         builder.Ignore(x => x.Courses);
     }

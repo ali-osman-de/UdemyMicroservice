@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddMongoOptionServiceExtension();
 builder.Services.AddRepositoryExtension();
+builder.Services.AddSwaggerGen();
 builder.Services.AddCommonServiceExtension(typeof(CatalogAssembly));
 
 
@@ -17,6 +18,8 @@ app.AddCategoryEndpointExtension();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwaggerUI();
+    app.UseSwagger();
     app.MapOpenApi();
 }
 
