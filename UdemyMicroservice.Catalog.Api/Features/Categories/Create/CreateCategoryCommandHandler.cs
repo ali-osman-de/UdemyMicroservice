@@ -1,9 +1,4 @@
-﻿using MassTransit;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
-using UdemyMicroservice.Catalog.Api.Repositories;
-using UdemyMicroservice.Shared;
+﻿using UdemyMicroservice.Catalog.Api.Repositories;
 
 namespace UdemyMicroservice.Catalog.Api.Features.Categories.Create;
 

@@ -1,6 +1,28 @@
-@UdemyMicroservice.Catalog.Api_HostAddress = http://localhost:5027
+@base = http://localhost:5027
+@categoryId = 08de4895-9bfc-4437-5405-dbba7aef0000
 
-GET {{UdemyMicroservice.Catalog.Api_HostAddress}}/weatherforecast/
+GET {{base}}/api/categories
 Accept: application/json
-
 ###
+POST {{base}}/api/categories
+Accept: application/json
+Content-Type: application/json
+{
+  "name": "Category 1"
+}
+###
+GET {{base}}/api/categories/{{categoryId}}
+Accept: application/json
+###
+DELETE {{base}}/api/categories/{{categoryId}}
+Accept: application/json
+###
+PUT {{base}}/api/categories/
+Accept: application/json
+Content-Type: application/json
+{
+  "id": "{{categoryId}}",
+  "name": "Update Deneme"
+}
+###
+
