@@ -25,4 +25,14 @@ Content-Type: application/json
   "name": "Update Deneme"
 }
 ###
+POST {{base}}/api/courses
+Accept: application/json
+Content-Type: application/json
+{
+  "name": "evlendirme2", 
+  "description": "denemedescpdaasda", 
+  "price": 120, 
+  "imageUri": "örnek.resim",
+  "categoryId": "{{categoryId}}"
+}
 
