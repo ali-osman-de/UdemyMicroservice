@@ -1,6 +1,9 @@
 <Solution>
   <Folder Name="/src/" />
   <Folder Name="/src/services/" />
+  <Folder Name="/src/services/basket/">
+    <Project Path="../UdemyMicroservice.Basket.Api/UdemyMicroservice.Basket.Api.csproj" Id="c068ee60-8fa5-4390-a2e8-f912bacb2559" />
+  </Folder>
   <Folder Name="/src/services/catalog/">
     <Project Path="UdemyMicroservice.Catalog.Api/UdemyMicroservice.Catalog.Api.csproj" />
   </Folder>

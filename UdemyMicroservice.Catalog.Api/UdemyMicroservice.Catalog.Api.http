@@ -6,20 +6,20 @@
 GET {{base}}/api/v1.0/categories
 Accept: application/json
 ###
-POST {{base}}/api/categories
+POST {{base}}/api/v1.0/categories
 Accept: application/json
 Content-Type: application/json
 {
   "name": "Category 1"
 }
 ###
-GET {{base}}/api/categories/{{categoryId}}
+GET {{base}}/api/v1.0/categories/{{categoryId}}
 Accept: application/json
 ###
-DELETE {{base}}/api/categories/{{categoryId}}
+DELETE {{base}}/api/v1.0/categories/{{categoryId}}
 Accept: application/json
 ###
-PUT {{base}}/api/categories/
+PUT {{base}}/api/v1.0/categories/
 Accept: application/json
 Content-Type: application/json
 {
@@ -27,7 +27,7 @@ Content-Type: application/json
   "name": "Update Deneme"
 }
 ###
-POST {{base}}/api/courses
+POST {{base}}/api/v1.0/courses
 Accept: application/json
 Content-Type: application/json
 {
@@ -38,13 +38,13 @@ Content-Type: application/json
   "categoryId": "{{categoryId}}"
 }
 ###
-GET {{base}}/api/courses
+GET {{base}}/api/v1.0/courses
 Accept: application/json
 ###
 GET {{base}}/api/courses/{{courseId}}
 Accept: application/json
 ###
-PUT {{base}}/api/courses
+PUT {{base}}/api/v1.0/courses
 Accept: application/json
 Content-Type: application/json
 {
@@ -56,8 +56,8 @@ Content-Type: application/json
   "categoryId": "{{categoryId}}"
 }
 ###
-DELETE {{base}}/api/courses /{{courseId}}
+DELETE {{base}}/api/v1.0/courses /{{courseId}}
 Accept: application/json
 ###
-GET {{base}}/api/courses/user/{{userId}}
+GET {{base}}/api/v1.0/courses/user/{{userId}}
 Accept: application/json
