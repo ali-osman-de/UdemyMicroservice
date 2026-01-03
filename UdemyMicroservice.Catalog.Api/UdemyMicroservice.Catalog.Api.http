@@ -3,7 +3,7 @@
 @courseId = 08de4a47-902a-818b-5405-dbba7aef0000 
 @userId = 7aef0000-dbba-5405-8357-08de4ab72b8b
 
-GET {{base}}/api/categories
+GET {{base}}/api/v1.0/categories
 Accept: application/json
 ###
 POST {{base}}/api/categories

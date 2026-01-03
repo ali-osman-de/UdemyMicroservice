@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddMongoOptionServiceExtension();
 builder.Services.AddRepositoryExtension();
+builder.Services.AddVersioningExtension();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCommonServiceExtension(typeof(CatalogAssembly));
 
@@ -19,8 +20,8 @@ app.AddSeedDataExtension().ContinueWith(x =>
     Console.WriteLine(x.IsFaulted ? x.Exception?.Message : "Seed Data has been successfully loaded!");
 });
 
-app.AddCategoryEndpointExtension();
-app.AddCourseEndpointExtension();
+app.AddCategoryEndpointExtension(app.AddVersionSetExtension());
+app.AddCourseEndpointExtension(app.AddVersionSetExtension());
 
 if (app.Environment.IsDevelopment())
 {

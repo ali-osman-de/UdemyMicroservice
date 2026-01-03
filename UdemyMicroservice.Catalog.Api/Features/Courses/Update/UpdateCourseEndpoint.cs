@@ -13,6 +13,7 @@ public static class UpdateCourseEndpoint
                                                               command.Price, 
                                                               command.ImageUri, 
                                                               command.CategoryId))).ToResult())
+             .MapToApiVersion(1, 0)
              .AddEndpointFilter<ValidationFilter<UpdateCourseCommand>>();
         return group;
     }

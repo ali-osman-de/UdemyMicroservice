@@ -6,7 +6,8 @@ public static class GetAllCourseByUserIdEndpoint
 {
     public static RouteGroupBuilder GetAllCourseByUserIdEndpointGroupItem(this RouteGroupBuilder group)
     {
-        group.MapGet("/user/{userId:guid}", async (IMediator mediator, Guid UserId) => (await mediator.Send(new GetAllCourseByUserIdQuery(UserId))).ToResult());
+        group.MapGet("/user/{userId:guid}", async (IMediator mediator, Guid UserId) => (await mediator.Send(new GetAllCourseByUserIdQuery(UserId))).ToResult())
+             .MapToApiVersion(1, 0); ;
         return group;
     }
 }

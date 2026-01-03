@@ -1,4 +1,5 @@
-﻿using UdemyMicroservice.Catalog.Api.Features.Courses.Create;
+﻿using Asp.Versioning.Builder;
+using UdemyMicroservice.Catalog.Api.Features.Courses.Create;
 using UdemyMicroservice.Catalog.Api.Features.Courses.GetAll;
 using UdemyMicroservice.Catalog.Api.Features.Courses.GetAllByUserId;
 using UdemyMicroservice.Catalog.Api.Features.Courses.GetById;
@@ -9,9 +10,10 @@ namespace UdemyMicroservice.Catalog.Api.Features.Courses;
 
 public static class CourseEndpointExtension
 {
-    public static void AddCourseEndpointExtension(this WebApplication app)
+    public static void AddCourseEndpointExtension(this WebApplication app, ApiVersionSet apiVersionSet)
     {
-        app.MapGroup("api/courses")
+        app.MapGroup("api/v{version:apiVersion}/courses")
+           .WithApiVersionSet(apiVersionSet)
            .CreateCourseEndpointGroupItem()
            .GetAllCourseEndpointGroupItem()
            .GetByIdCourseEndpointGroupItem()
