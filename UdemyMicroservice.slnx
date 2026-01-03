@@ -2,13 +2,13 @@
   <Folder Name="/src/" />
   <Folder Name="/src/services/" />
   <Folder Name="/src/services/basket/">
-    <Project Path="../UdemyMicroservice.Basket.Api/UdemyMicroservice.Basket.Api.csproj" Id="c068ee60-8fa5-4390-a2e8-f912bacb2559" />
+    <Project Path="UdemyMicroservice.Basket.Api/UdemyMicroservice.Basket.Api.csproj" />
   </Folder>
   <Folder Name="/src/services/catalog/">
     <Project Path="UdemyMicroservice.Catalog.Api/UdemyMicroservice.Catalog.Api.csproj" />
   </Folder>
   <Folder Name="/src/Shared/">
-    <Project Path="../UdemyMicroservice.Shared/UdemyMicroservice.Shared.csproj" Id="7a2c80d7-710f-4fd7-8a3d-f51da6282fc0" />
+    <Project Path="UdemyMicroservice.Shared/UdemyMicroservice.Shared.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />

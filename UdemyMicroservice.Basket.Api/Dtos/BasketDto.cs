@@ -1,3 +1,18 @@
-﻿namespace UdemyMicroservice.Basket.Api.Dtos;
+﻿using System.Text.Json.Serialization;
 
-public record BasketDto(Guid UserId, List<BasketItemDto> BasketItemsDto);
+namespace UdemyMicroservice.Basket.Api.Dtos;
+
+public record BasketDto()
+{
+    public BasketDto(Guid userId, List<BasketItemDto> basketItemsDto) : this()
+    {
+        UserId = userId;
+        BasketItemsDto = basketItemsDto;
+    }
+
+    [JsonIgnore] 
+    public Guid UserId { get; init; }
+    public List<BasketItemDto> BasketItemsDto { get; set; } 
+
+
+};

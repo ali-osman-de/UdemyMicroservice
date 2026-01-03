@@ -2,5 +2,5 @@
 
 namespace UdemyMicroservice.Basket.Api.Features.Basket.AddBasketItem;
 
-public record AddBasketItemCommand(Guid Id, string Name, decimal Price, string? ImageUri) : IServiceResultWrapper.IRequestByServiceResult;
+public record AddBasketItemCommand(Guid CourseId, string CourseName, decimal Price, string? ImageUri) : IServiceResultWrapper.IRequestByServiceResult;
     

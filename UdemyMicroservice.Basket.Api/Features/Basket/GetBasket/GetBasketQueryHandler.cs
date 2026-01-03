@@ -1,0 +1,27 @@
+﻿using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Net;
+using System.Text.Json;
+using UdemyMicroservice.Basket.Api.Const;
+using UdemyMicroservice.Basket.Api.Dtos;
+using UdemyMicroservice.Shared;
+using UdemyMicroservice.Shared.Services;
+
+namespace UdemyMicroservice.Basket.Api.Features.Basket.GetBasket;
+
+public class GetBasketQueryHandler(IDistributedCache dCache, IIdentityService identityService) : IRequestHandler<GetBasketQuery, ServiceResult<BasketDto>>
+{
+    public async Task<ServiceResult<BasketDto>> Handle(GetBasketQuery request, CancellationToken cancellationToken)
+    {
+        var cacheKey = string.Format(BasketConst.BasketCacheKey, identityService.UserId);
+        var basketAsString = await dCache.GetStringAsync(cacheKey, cancellationToken);
+
+        if (string.IsNullOrEmpty(basketAsString))
+        {
+            return ServiceResult<BasketDto>.Error("Basket Issue", "Basket Not Found", HttpStatusCode.NotFound);
+        }
+        var basket = JsonSerializer.Deserialize<BasketDto>(basketAsString);
+
+        return ServiceResult<BasketDto>.SuccessAsOk(basket!);
+    }
+}
