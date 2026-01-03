@@ -1,5 +1,7 @@
 @base = http://localhost:5027
 @categoryId = 08de4895-9bfc-4437-5405-dbba7aef0000
+@courseId = 08de4a47-902a-818b-5405-dbba7aef0000 
+@userId = 7aef0000-dbba-5405-8357-08de4ab72b8b
 
 GET {{base}}/api/categories
 Accept: application/json
@@ -35,4 +37,27 @@ Content-Type: application/json
   "imageUri": "örnek.resim",
   "categoryId": "{{categoryId}}"
 }
-
+###
+GET {{base}}/api/courses
+Accept: application/json
+###
+GET {{base}}/api/courses/{{courseId}}
+Accept: application/json
+###
+PUT {{base}}/api/courses
+Accept: application/json
+Content-Type: application/json
+{
+  "id": "{{courseId}}",
+  "name": "Update Deneme",
+  "description": "deðiþti update",
+  "price": 299.99,
+  "imageUri": "http://updated",
+  "categoryId": "{{categoryId}}"
+}
+###
+DELETE {{base}}/api/courses /{{courseId}}
+Accept: application/json
+###
+GET {{base}}/api/courses/user/{{userId}}
+Accept: application/json
