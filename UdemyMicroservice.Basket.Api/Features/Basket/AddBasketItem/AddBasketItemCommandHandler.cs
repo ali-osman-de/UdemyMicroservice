@@ -33,6 +33,8 @@ public class AddBasketItemCommandHandler(IDistributedCache dCache, IIdentityServ
         if (existingBasketItem is not null) currentBasket.BasketItems.Remove(existingBasketItem);
         currentBasket.BasketItems.Add(basket);
 
+        currentBasket.ApplyAvailableDiscount();
+
         await CreateCacheAsync(cacheKey, currentBasket, cancellationToken);
         return ServiceResult.SuccessAsNoContent();
     }
