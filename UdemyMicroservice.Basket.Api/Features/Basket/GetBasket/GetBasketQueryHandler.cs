@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Net;
 using System.Text.Json;
@@ -9,7 +10,9 @@ using UdemyMicroservice.Shared.Services;
 
 namespace UdemyMicroservice.Basket.Api.Features.Basket.GetBasket;
 
-public class GetBasketQueryHandler(IDistributedCache dCache, IIdentityService identityService) : IRequestHandler<GetBasketQuery, ServiceResult<BasketDto>>
+public class GetBasketQueryHandler(IDistributedCache dCache, 
+                                   IIdentityService identityService, 
+                                   IMapper mapper) : IRequestHandler<GetBasketQuery, ServiceResult<BasketDto>>
 {
     public async Task<ServiceResult<BasketDto>> Handle(GetBasketQuery request, CancellationToken cancellationToken)
     {
@@ -20,8 +23,10 @@ public class GetBasketQueryHandler(IDistributedCache dCache, IIdentityService id
         {
             return ServiceResult<BasketDto>.Error("Basket Issue", "Basket Not Found", HttpStatusCode.NotFound);
         }
-        var basket = JsonSerializer.Deserialize<BasketDto>(basketAsString);
+        var basket = JsonSerializer.Deserialize<Data.Basket>(basketAsString);
 
-        return ServiceResult<BasketDto>.SuccessAsOk(basket!);
+        var basketDto = mapper.Map<BasketDto>(basket);
+
+        return ServiceResult<BasketDto>.SuccessAsOk(basketDto);
     }
 }

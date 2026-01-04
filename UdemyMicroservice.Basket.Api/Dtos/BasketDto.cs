@@ -4,15 +4,15 @@ namespace UdemyMicroservice.Basket.Api.Dtos;
 
 public record BasketDto()
 {
-    public BasketDto(Guid userId, List<BasketItemDto> basketItemsDto) : this()
+    public BasketDto(Guid userId, List<BasketItemDto> basketItems) : this()
     {
         UserId = userId;
-        BasketItemsDto = basketItemsDto;
+        BasketItems = basketItems;
     }
 
     [JsonIgnore] 
     public Guid UserId { get; init; }
-    public List<BasketItemDto> BasketItemsDto { get; set; } 
+    public List<BasketItemDto>? BasketItems { get; set; } 
 
 
 };
