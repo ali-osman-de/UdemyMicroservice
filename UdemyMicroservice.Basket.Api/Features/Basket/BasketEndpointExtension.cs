@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning.Builder;
 using UdemyMicroservice.Basket.Api.Features.Basket.AddBasketItem;
+using UdemyMicroservice.Basket.Api.Features.Basket.ApplyDiscountToBasket;
 using UdemyMicroservice.Basket.Api.Features.Basket.GetBasket;
 using UdemyMicroservice.Basket.Api.Features.Basket.RemoveBasketItem;
 
@@ -13,6 +14,7 @@ public static class BasketEndpointExtension
            .WithApiVersionSet(apiVersionSet)
            .AddBasketItemEndpointGroupItem()
            .RemoveBasketItemEndpointGroupItem()
-           .GetBasketItemEndpointGroupItem();
+           .GetBasketItemEndpointGroupItem()
+           .ApplyDiscountRateEndpointGroupItem();
     }
 }
