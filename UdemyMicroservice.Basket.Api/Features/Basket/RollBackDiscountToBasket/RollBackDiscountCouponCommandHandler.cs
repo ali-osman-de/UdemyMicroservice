@@ -3,15 +3,14 @@ using Microsoft.Extensions.Caching.Distributed;
 using System.Net;
 using System.Text.Json;
 using UdemyMicroservice.Basket.Api.Const;
-using UdemyMicroservice.Basket.Api.Dtos;
 using UdemyMicroservice.Shared;
 using UdemyMicroservice.Shared.Services;
 
-namespace UdemyMicroservice.Basket.Api.Features.Basket.ApplyDiscountToBasket;
+namespace UdemyMicroservice.Basket.Api.Features.Basket.RollBackDiscountToBasket;
 
-public class ApplyDiscountCouponCommandHandler(IDistributedCache dCache, IIdentityService identityService) : IRequestHandler<ApplyDiscountCouponCommand, ServiceResult>
+public class RollBackDiscountCouponCommandHandler(IDistributedCache dCache, IIdentityService identityService) : IRequestHandler<RollBackDiscountCouponCommand, ServiceResult>
 {
-    public async Task<ServiceResult> Handle(ApplyDiscountCouponCommand request, CancellationToken cancellationToken)
+    public async Task<ServiceResult> Handle(RollBackDiscountCouponCommand request, CancellationToken cancellationToken)
     {
         var cacheKey = string.Format(BasketConst.BasketCacheKey, identityService.UserId);
         var basketAsString = await dCache.GetStringAsync(cacheKey, cancellationToken);
@@ -20,12 +19,10 @@ public class ApplyDiscountCouponCommandHandler(IDistributedCache dCache, IIdenti
 
         var basket = JsonSerializer.Deserialize<Data.Basket>(basketAsString);
 
-        if (!basket!.BasketItems.Any()) return ServiceResult.Error("Basket Issue", "Basket items Not Found", HttpStatusCode.NotFound);
-
-        basket.ApplyDiscount(request.Coupon, request.Rate);
+        basket!.ClearDiscount();
 
         await dCache.SetStringAsync(cacheKey, JsonSerializer.Serialize(basket), cancellationToken);
-        return ServiceResult.SuccessAsNoContent();
 
+        return ServiceResult.SuccessAsNoContent();
     }
 }

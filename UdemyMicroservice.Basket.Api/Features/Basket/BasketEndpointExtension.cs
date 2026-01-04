@@ -3,6 +3,7 @@ using UdemyMicroservice.Basket.Api.Features.Basket.AddBasketItem;
 using UdemyMicroservice.Basket.Api.Features.Basket.ApplyDiscountToBasket;
 using UdemyMicroservice.Basket.Api.Features.Basket.GetBasket;
 using UdemyMicroservice.Basket.Api.Features.Basket.RemoveBasketItem;
+using UdemyMicroservice.Basket.Api.Features.Basket.RollBackDiscountToBasket;
 
 namespace UdemyMicroservice.Basket.Api.Features.Basket;
 
@@ -15,6 +16,7 @@ public static class BasketEndpointExtension
            .AddBasketItemEndpointGroupItem()
            .RemoveBasketItemEndpointGroupItem()
            .GetBasketItemEndpointGroupItem()
-           .ApplyDiscountRateEndpointGroupItem();
+           .ApplyDiscountRateEndpointGroupItem()
+           .RollBackDiscountEndpointGroupItem();
     }
 }

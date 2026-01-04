@@ -25,3 +25,6 @@ Content-Type: application/json
   "coupon": "abcdef",
   "rate": 0.2
 }
+###
+DELETE {{base}}/api/v1.0/basket/rollbackdiscount
+Accept: application/json
