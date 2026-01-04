@@ -9,12 +9,11 @@ using UdemyMicroservice.Shared.Services;
 
 namespace UdemyMicroservice.Basket.Api.Features.Basket.ApplyDiscountToBasket;
 
-public class ApplyDiscountCouponCommandHandler(IDistributedCache dCache, IIdentityService identityService) : IRequestHandler<ApplyDiscountCouponCommand, ServiceResult>
+public class ApplyDiscountCouponCommandHandler(BasketService basketService) : IRequestHandler<ApplyDiscountCouponCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(ApplyDiscountCouponCommand request, CancellationToken cancellationToken)
     {
-        var cacheKey = string.Format(BasketConst.BasketCacheKey, identityService.UserId);
-        var basketAsString = await dCache.GetStringAsync(cacheKey, cancellationToken);
+        var basketAsString = await basketService.GetBasketFromCache(cancellationToken);
 
         if (string.IsNullOrEmpty(basketAsString)) return ServiceResult.Error("Basket Issue", "Basket Not Found", HttpStatusCode.NotFound);
 
@@ -24,7 +23,7 @@ public class ApplyDiscountCouponCommandHandler(IDistributedCache dCache, IIdenti
 
         basket.ApplyDiscount(request.Coupon, request.Rate);
 
-        await dCache.SetStringAsync(cacheKey, JsonSerializer.Serialize(basket), cancellationToken);
+        await basketService.CreateCache(basket, cancellationToken);
         return ServiceResult.SuccessAsNoContent();
 
     }

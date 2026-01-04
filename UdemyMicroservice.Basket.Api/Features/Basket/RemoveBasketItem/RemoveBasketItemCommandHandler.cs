@@ -8,14 +8,12 @@ using UdemyMicroservice.Shared.Services;
 
 namespace UdemyMicroservice.Basket.Api.Features.Basket.RemoveBasketItem;
 
-public class RemoveBasketItemCommandHandler(IDistributedCache dCache, IIdentityService identityService) : IRequestHandler<RemoveBasketItemCommand, ServiceResult>
+public class RemoveBasketItemCommandHandler(IIdentityService identityService, BasketService basketService) : IRequestHandler<RemoveBasketItemCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(RemoveBasketItemCommand request, CancellationToken cancellationToken)
     {
         var UserId = identityService.UserId;
-        var cacheKey = string.Format(BasketConst.BasketCacheKey, UserId);
-
-        var basketAsString = await dCache.GetStringAsync(cacheKey, cancellationToken);
+        var basketAsString = await basketService.GetBasketFromCache(cancellationToken);
         
         if (string.IsNullOrEmpty(basketAsString))
         {
@@ -30,7 +28,8 @@ public class RemoveBasketItemCommandHandler(IDistributedCache dCache, IIdentityS
             return ServiceResult.Error("Basket Issue", "Basket Not Found", HttpStatusCode.NotFound);
         }
         currenBasket.BasketItems.Remove(basketItemForRemove);
-        await dCache.SetStringAsync(cacheKey, JsonSerializer.Serialize(currenBasket), cancellationToken);
+
+        await basketService.CreateCache(currentBasket: currenBasket, cancellationToken);
         return ServiceResult.SuccessAsNoContent();
     }
 }

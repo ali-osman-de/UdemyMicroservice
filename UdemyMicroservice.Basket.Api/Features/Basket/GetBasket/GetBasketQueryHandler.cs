@@ -10,14 +10,12 @@ using UdemyMicroservice.Shared.Services;
 
 namespace UdemyMicroservice.Basket.Api.Features.Basket.GetBasket;
 
-public class GetBasketQueryHandler(IDistributedCache dCache, 
-                                   IIdentityService identityService, 
+public class GetBasketQueryHandler(BasketService basketService,
                                    IMapper mapper) : IRequestHandler<GetBasketQuery, ServiceResult<BasketDto>>
 {
     public async Task<ServiceResult<BasketDto>> Handle(GetBasketQuery request, CancellationToken cancellationToken)
     {
-        var cacheKey = string.Format(BasketConst.BasketCacheKey, identityService.UserId);
-        var basketAsString = await dCache.GetStringAsync(cacheKey, cancellationToken);
+        var basketAsString = await basketService.GetBasketFromCache(cancellationToken);
 
         if (string.IsNullOrEmpty(basketAsString))
         {

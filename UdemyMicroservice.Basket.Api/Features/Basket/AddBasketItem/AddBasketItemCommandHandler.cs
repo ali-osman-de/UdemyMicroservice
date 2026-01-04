@@ -8,14 +8,13 @@ using UdemyMicroservice.Shared.Services;
 
 namespace UdemyMicroservice.Basket.Api.Features.Basket.AddBasketItem;
 
-public class AddBasketItemCommandHandler(IDistributedCache dCache, IIdentityService identityService) : IRequestHandler<AddBasketItemCommand, ServiceResult>
+public class AddBasketItemCommandHandler(IIdentityService identityService, BasketService basketService) : IRequestHandler<AddBasketItemCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(AddBasketItemCommand request, CancellationToken cancellationToken)
     {
         Guid userId = identityService.UserId;
-        var cacheKey = string.Format(BasketConst.BasketCacheKey, userId);
-
-        var basketAsString = await dCache.GetStringAsync(cacheKey, cancellationToken);
+        
+        var basketAsString = await basketService.GetBasketFromCache(cancellationToken);
 
         Data.Basket currentBasket;
         var basket = new BasketItem(request.CourseId, request.CourseName, request.Price, request.ImageUri, null);
@@ -23,7 +22,7 @@ public class AddBasketItemCommandHandler(IDistributedCache dCache, IIdentityServ
         if (string.IsNullOrEmpty(basketAsString))
         {
             currentBasket = new Data.Basket(userId, [basket]);
-            await CreateCacheAsync(cacheKey, currentBasket, cancellationToken);
+            await basketService.CreateCache(currentBasket, cancellationToken);
             return ServiceResult.SuccessAsNoContent();
         }
 
@@ -35,13 +34,9 @@ public class AddBasketItemCommandHandler(IDistributedCache dCache, IIdentityServ
 
         currentBasket.ApplyAvailableDiscount();
 
-        await CreateCacheAsync(cacheKey, currentBasket, cancellationToken);
+        await basketService.CreateCache(currentBasket, cancellationToken);
         return ServiceResult.SuccessAsNoContent();
     }
 
-    private async Task CreateCacheAsync(string cacheKey, Data.Basket currentBasket, CancellationToken cancellationToken)
-    {
-        var basketAsString = JsonSerializer.Serialize(currentBasket);
-        await dCache.SetStringAsync(cacheKey, basketAsString, cancellationToken);
-    }
+
 }

@@ -8,12 +8,11 @@ using UdemyMicroservice.Shared.Services;
 
 namespace UdemyMicroservice.Basket.Api.Features.Basket.RollBackDiscountToBasket;
 
-public class RollBackDiscountCouponCommandHandler(IDistributedCache dCache, IIdentityService identityService) : IRequestHandler<RollBackDiscountCouponCommand, ServiceResult>
+public class RollBackDiscountCouponCommandHandler(BasketService basketService) : IRequestHandler<RollBackDiscountCouponCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(RollBackDiscountCouponCommand request, CancellationToken cancellationToken)
     {
-        var cacheKey = string.Format(BasketConst.BasketCacheKey, identityService.UserId);
-        var basketAsString = await dCache.GetStringAsync(cacheKey, cancellationToken);
+        var basketAsString = await basketService.GetBasketFromCache(cancellationToken);
 
         if (string.IsNullOrEmpty(basketAsString)) return ServiceResult.Error("Basket Issue", "Basket Not Found", HttpStatusCode.NotFound);
 
@@ -21,7 +20,7 @@ public class RollBackDiscountCouponCommandHandler(IDistributedCache dCache, IIde
 
         basket!.ClearDiscount();
 
-        await dCache.SetStringAsync(cacheKey, JsonSerializer.Serialize(basket), cancellationToken);
+        await basketService.CreateCache(basket, cancellationToken);
 
         return ServiceResult.SuccessAsNoContent();
     }
